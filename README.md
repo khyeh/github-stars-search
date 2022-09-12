@@ -2,6 +2,8 @@
 
 Search UI that displays a list of GitHub repositories for a user ranked by stars. Built using React/TypeScript, vite, and TailwindCSS.
 
+This app is responsive and supports both light and dark mode. The appearance of the app is browser dependent. For example, if your current browser is set to dark mode, the app will be set to dark mode.
+
 ### Running the Application
 
 First, clone the repository:
