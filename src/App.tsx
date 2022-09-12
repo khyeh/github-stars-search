@@ -19,7 +19,7 @@ const App = () => {
     const params = {
       q: `user:${query}`,
       sort: "stars",
-      page: page,
+      page: page.toString(),
     };
     try {
       const response = await fetch(
@@ -78,7 +78,7 @@ const App = () => {
         <Loading />
       ) : (
         <Results results={results} currentPage={currentPage}>
-          <div className="flex row justify-center space-x-12 my-12">
+          <div className="flex row justify-between space-x-12 my-12">
             {currentPage !== 1 ? (
               <Button
                 onClick={() => handlePagination(currentPage - 1, "prev")}
