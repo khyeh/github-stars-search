@@ -1,5 +1,7 @@
 # github-stars-search
 
+Search UI that displays a list of GitHub repositories for a user ranked by stars. Built using React/TypeScript, vite, and TailwindCSS.
+
 ### Running the Application
 
 First, clone the repository:
@@ -57,4 +59,9 @@ Users would be directed to the 31-60 git repositories of the GitHub user.
 2. Prevent merges directly to the `main` branch and create a git actions workflow to enforce that ESLint and unit tests must pass before merging.
 3. Add file aliasing to simplify the readability of imports
 
-For example, `import Something from ../../src/components/Something` can be rewritten as `import Something from components/Something`.
+For example,
+`import Something from ../../src/components/Something`
+
+can be rewritten as
+
+`import Something from components/Something`.
