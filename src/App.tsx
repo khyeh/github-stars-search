@@ -1,4 +1,5 @@
 import React from "react";
+import { StarIcon } from "@heroicons/react/24/solid";
 import Button from "./shared/components/Button";
 import "./index.css";
 
@@ -81,8 +82,11 @@ const App = () => {
               >
                 <div className="flex justify-between">
                   <div>{`${index + 1}.`}</div>
-                  <div>{result.name}</div>
-                  <div>{result.stargazers_count}</div>
+                  <a href={result.url}>{result.name}</a>
+                  <div className="flex row align-center space-x-2">
+                    <StarIcon className="h-6 w-6 text-yellow-500" />
+                    <div>{result.stargazers_count}</div>
+                  </div>
                 </div>
               </div>
             </React.Fragment>
