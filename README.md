@@ -5,7 +5,7 @@
 First, clone the repository:
 
 ```
-git clone https://github.com/dougUCN/LANE-client.git
+git clone git@github.com:khyeh/github-stars-search.git
 ```
 
 Next, enter the newly cloned project and run the following:
