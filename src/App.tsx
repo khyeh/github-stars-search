@@ -6,6 +6,7 @@ import { GetRepositoriesResponse, Repository } from "./types/repositories";
 import TextField from "./shared/components/TextField";
 import Loading from "./shared/components/Loading";
 import Results from "./Results";
+import PaginationButtons from "./PaginationButtons";
 
 const API_URL = "https://api.github.com";
 
@@ -78,22 +79,11 @@ const App = () => {
         <Loading />
       ) : (
         <Results results={results} currentPage={currentPage}>
-          <div className="flex row justify-between space-x-12 my-12">
-            {currentPage !== 1 ? (
-              <Button
-                onClick={() => handlePagination(currentPage - 1, "prev")}
-                className="py-2"
-              >
-                Previous
-              </Button>
-            ) : null}
-            <Button
-              onClick={() => handlePagination(currentPage + 1, "next")}
-              className="py-2"
-            >
-              Next
-            </Button>
-          </div>
+          <PaginationButtons
+            onPrev={() => handlePagination(currentPage - 1, "prev")}
+            onNext={() => handlePagination(currentPage + 1, "next")}
+            currentPage={currentPage}
+          />
         </Results>
       )}
     </div>
