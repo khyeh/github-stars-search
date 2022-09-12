@@ -1,12 +1,11 @@
 import React from "react";
-import { StarIcon } from "@heroicons/react/24/solid";
 import Button from "./shared/components/Button";
 import "./index.css";
 
 import { GetRepositoriesResponse, Repository } from "./types/repositories";
 import TextField from "./shared/components/TextField";
 import Loading from "./shared/components/Loading";
-import clsx from "clsx";
+import Results from "./Results";
 
 const API_URL = "https://api.github.com";
 
@@ -14,11 +13,13 @@ const App = () => {
   const [query, setQuery] = React.useState<string>("");
   const [results, setResults] = React.useState<Repository[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
-  const fetchResults = async (query: string) => {
+  const fetchResults = async (query: string, page: number = 1) => {
     const params = {
       q: `user:${query}`,
       sort: "stars",
+      page: page,
     };
     try {
       const response = await fetch(
@@ -38,6 +39,16 @@ const App = () => {
     setIsLoading(false);
     setResults(results);
   };
+
+  const handlePagination = async (page: number, direction: "next" | "prev") => {
+    setIsLoading(true);
+    setCurrentPage(direction === "next" ? currentPage + 1 : currentPage - 1);
+    const results = await fetchResults(query, page);
+    setIsLoading(false);
+    setResults(results);
+  };
+
+  console.log("current page", currentPage);
 
   return (
     <div className="xl:mx-48 lg:mx-24 md:mx-48 sm:mx-24 mx-6 my-6">
@@ -66,32 +77,24 @@ const App = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="grid lg:grid-rows-15 lg:grid-flow-col md:grid-flow-row md:grid-col-1 gap-4">
-          {results.map((result, index) => (
-            <React.Fragment key={result.id}>
-              <div
-                className={clsx(
-                  "px-4",
-                  "sm:px-6",
-                  "py-3",
-                  "bg-gray-100",
-                  "border-gray-300",
-                  "dark:bg-gray-700",
-                  "dark:bg-border-gray-600"
-                )}
+        <Results results={results} currentPage={currentPage}>
+          <div className="flex row justify-center space-x-12 my-12">
+            {currentPage !== 1 ? (
+              <Button
+                onClick={() => handlePagination(currentPage - 1, "prev")}
+                className="py-2"
               >
-                <div className="flex justify-between">
-                  <div>{`${index + 1}.`}</div>
-                  <a href={result.url}>{result.name}</a>
-                  <div className="flex row align-center space-x-2">
-                    <StarIcon className="h-6 w-6 text-yellow-500" />
-                    <div>{result.stargazers_count}</div>
-                  </div>
-                </div>
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
+                Previous
+              </Button>
+            ) : null}
+            <Button
+              onClick={() => handlePagination(currentPage + 1, "next")}
+              className="py-2"
+            >
+              Next
+            </Button>
+          </div>
+        </Results>
       )}
     </div>
   );
