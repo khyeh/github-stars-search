@@ -1,7 +1,9 @@
 import React from "react";
+import Button from "./shared/components/Button";
 import "./index.css";
 
 import { GetRepositoriesResponse, Repository } from "./types/repositories";
+import TextField from "./shared/components/TextField";
 
 const API_URL = "https://api.github.com";
 
@@ -43,13 +45,16 @@ const App = () => {
         }}
       >
         <div className="flex flex-row justify-center my-6 space-x-12">
-          <input
-            className="bg-gray-200"
+          <TextField
+            placeholder="Search GitHub Users"
+            spellCheck="false"
             value={query}
             type="text"
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button onClick={handleSearch}>Search</button>
+          <Button disabled={!query} onClick={handleSearch}>
+            Search
+          </Button>
         </div>
       </form>
       <div className="mt-6 grid grid-cols-12 gap-4">
